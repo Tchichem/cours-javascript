@@ -1,6 +1,3 @@
-94 % de l'espace de stockage utilisés … 
-Une fois la limite atteinte, vous ne pouvez plus créer, modifier ni importer de fichiers. Profitez de 100 Go de stockage pour 1,99 € 0,49 € pendant 1 mois (tarif personnalisé).
-
 console.log("Hello World"); // fonction prédéfinie
 
 // c'est un morceau de code prédéfinie qui appartient au langage Javascript (que le navigateur comprend)
