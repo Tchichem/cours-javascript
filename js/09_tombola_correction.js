@@ -1,7 +1,3 @@
-function writeInDom(txt) {
-    document.getElementById("result").innerHTML += "<p>" + txt + "</p>";
-}
-
 class Player { // custom type (notre propre type)
 
     constructor( name, money, sexe ) {
@@ -11,7 +7,7 @@ class Player { // custom type (notre propre type)
     }
 
     sePresenter() {
-        writeInDom("Je m'appel " + this.name + " et j'ai " + this.money + " sur mon compte !");
+        console.log("Je m'appel " + this.name + " et j'ai " + this.money + " sur mon compte !");
         // return "Je m'appel " + this.name + " et j'ai " + this.money + " sur mon compte !";
     }
 
@@ -59,15 +55,22 @@ while (nbrWinners < 3) {
             winnersHaveWoman = true;
         }
 
-        writeInDom(winner.name + "remporte " + rewards[nbrWinners] + " et dispose maintenant de " + winner.money + " sur son compte !");
+        console.log(winner.name + "remporte " + rewards[nbrWinners] + " et dispose maintenant de " + winner.money + " sur son compte !");
     
         nbrWinners++;
     }
 
 }
 
+if (confirm) {
+    game(); 
+} else {
+    console.log("Ok tant pis");
 }
 
+}
+
+game();
 
 
 
@@ -83,25 +86,3 @@ while (nbrWinners < 3) {
 // console.log(result);
 // console.log(squareNumber(2));
 // console.log(2*2);
-
-// MANIPULATION DU DOM
-
-// PAR SON ID
-
-const BTN = document.getElementById("btn");
-console.log(BTN);
-BTN.style.backgroundColor = "violet";
-BTN.style.color = "white";
-BTN.innerText = "Tenter ma chance à la tombola";
-
-BTN.addEventListener("click", function() {
-    game();
-})
-
-document.getElementById("clearBtn").addEventListener("click", function () {
-    document.getElementById("result").innerHTML = "";
-})
-
-// PAR SA CLASSE 
-
-document.getElementsByClassName
