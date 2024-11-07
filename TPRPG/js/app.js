@@ -4,9 +4,12 @@ let listCharacEnem = [];
 let listLvl = [];
 let mainChar;
 let encounters;
+let gamebtnpushed = false;
 let gamestarted = false;
 let gameended = false;
-console.log(gameended);
+let diffChoose = false;
+let difficulty;
+let diffTxt ;
 
 // initialisation des boutons de jeu et de nettoyage de page
 function writeInDom(txt) {
@@ -16,9 +19,9 @@ function writeInDom(txt) {
 const BTN = document.getElementById("btn");
 BTN.style.backgroundColor = "black";
 BTN.style.color = "white";
-
+BTN.style.display = "block";
 BTN.addEventListener("click", function() {
-    gameStart();
+    gameDiff();
 })
 
 // const CLEARBTN = document.getElementById("clearBtn");
@@ -34,7 +37,7 @@ REPLAYBTN.style.color = "white";
 REPLAYBTN.style.display = "none";
 REPLAYBTN.addEventListener("click", function () {
     document.getElementById("game").innerHTML = "";
-    gameStart();
+    gameDiff();
 })
 
 // boutons de sélection de perso
@@ -83,7 +86,61 @@ CHARABTN3.addEventListener("click", function(e) {
     
 })
 
+const EASYBTN = document.getElementById("easybtn");
+EASYBTN.style.backgroundColor = "orange";
+EASYBTN.style.color = "white";
+EASYBTN.style.display = "none";
+EASYBTN.addEventListener("click", function(e) {
+    const target = e.target.closest("#easybtn"); // Or any other selector.
+
+    if(target){
+        document.getElementById("game").innerHTML = "";
+        difficulty = 0;
+        gameChara();
+    }
+    
+})
+
+const HARDBTN = document.getElementById("hardbtn");
+HARDBTN.style.backgroundColor = "chocolate";
+HARDBTN.style.color = "white";
+HARDBTN.style.display = "none";
+HARDBTN.addEventListener("click", function(e) {
+    const target = e.target.closest("#hardbtn"); // Or any other selector.
+
+    if(target){
+        document.getElementById("game").innerHTML = "";
+        difficulty = 1;
+        gameChara();
+    }
+    
+})
+
+const IMPOSSIBLEBTN = document.getElementById("impossiblebtn");
+IMPOSSIBLEBTN.style.backgroundColor = "purple";
+IMPOSSIBLEBTN.style.color = "white";
+IMPOSSIBLEBTN.style.display = "none";
+IMPOSSIBLEBTN.addEventListener("click", function(e) {
+    const target = e.target.closest("#impossiblebtn"); // Or any other selector.
+
+    if(target){
+        document.getElementById("game").innerHTML = "";
+        difficulty = 2;
+        gameChara();
+    }
+    
+})
+
 // fonctions pour montrer les boutons de choix de perso après avoir commencé le jeu
+function showGameBTN(){
+    if(gamebtnpushed == true) {
+        BTN.style.display = "block";
+        
+    } else {
+        BTN.style.display = "none";
+    }
+}
+
 function showChara1(){
     if(gamestarted == true) {
         CHARABTN1.style.display = "block";
@@ -106,6 +163,31 @@ function showChara3(){
         CHARABTN3.style.display = "block";
     } else {
         CHARABTN3.style.display = "none";
+    }
+}
+
+function showEasy(){
+    if(diffChoose == true) {
+        EASYBTN.style.display = "block";
+        
+    } else {
+        EASYBTN.style.display = "none";
+    }
+}
+
+function showHard(){
+    if(diffChoose == true) {
+        HARDBTN.style.display = "block";
+    } else {
+        HARDBTN.style.display = "none";
+    }
+}
+
+function showImpossible(){
+    if(diffChoose == true) {
+        IMPOSSIBLEBTN.style.display = "block";
+    } else {
+        IMPOSSIBLEBTN.style.display = "none";
     }
 }
 
@@ -171,14 +253,37 @@ listLvl.push(4);
 listLvl.push(12);
 listLvl.push(18);
 
-function gameStart(){
+function gameDiff(){
+    gameended = false;
+    showReplay();
+    gamebtnpushed = false;
+    showGameBTN();
     // choix et set de la difficulté
         // prompt de choix de difficulté
-        let difficulty = prompt("Choisissez votre niveau de difficulté. Tapez 0 pour Facile, 1 pour Difficile, 2 pour Impossible", 0);
-        if (difficulty > 2){
-            alert("Erreur. Veuillez écrire un chiffre entre 0 et 2.")
-        }
+        // let difficulty = prompt("Choisissez votre niveau de difficulté. Tapez 0 pour Facile, 1 pour Difficile, 2 pour Impossible", 0);
+        // if (difficulty > 2){
+        //     alert("Erreur. Veuillez écrire un chiffre entre 0 et 2.")
+        // }
+        diffChoose = true;
+        showEasy();
+        showHard();
+        showImpossible();
+}
 
+function gameChara(){
+
+    if(difficulty == 0){
+        diffTxt = "Facile";
+    } else if(difficulty == 1){
+        diffTxt = "Difficile";
+    } else if(difficulty == 2) {
+        diffTxt = "Impossible";
+    }
+    writeInDom("<h2>Difficulté : " + diffTxt + "</h2>");
+    gamestarted = true
+    showChara1();
+    showChara2();
+    showChara3();
         // attribution de la difficulté selon le prompt envoyé dans la variable difficulty
         if(difficulty == 0) {
             // encounters set to 4
@@ -217,9 +322,9 @@ function gameStart(){
         }
 
         writeInDom("Choisissez votre personnage : ");
-        writeInDom("Seong Gi-hun : </br> Commence le jeu avec 10 billes </br> -3 billes si défaite. </br> +1 bille si victoire.</br>");
-        writeInDom("Kang Sae-byeok : </br> Commence le jeu avec 15 billes </br> -2 billes si défaite. </br> +2 bille si victoire.</br>");
-        writeInDom("Cho Sang-woo : </br> Commence le jeu avec 25 billes </br> -1 billes si défaite. </br> +3 bille si victoire.</br>");
+        writeInDom("Seong Gi-hun : </br> Commence le jeu avec 10 billes </br> -3 billes si défaite </br> +1 bille si victoire</br>");
+        writeInDom("Kang Sae-byeok : </br> Commence le jeu avec 15 billes </br> -2 billes si défaite </br> +2 bille si victoire</br>");
+        writeInDom("Cho Sang-woo : </br> Commence le jeu avec 25 billes </br> -1 billes si défaite </br> +3 bille si victoire</br>");
         gamestarted = true;
         showChara1();
         showChara2();
@@ -230,11 +335,21 @@ function gameStart(){
 
 function combat(character){
     let selectedChar = copy(character);
-
+    let encounteredEnem = [];
     // commencement des combats
     for(let i = 0; i < encounters; i++) {
         let random = Math.floor(Math.random() * (encounters));
         let enemy = listCharacEnem[random];
+        let known = false;
+        if(encounteredEnem.includes(enemy)){
+            known = true;
+        }
+        if(known) {
+            i-=1;
+            continue;
+        }
+
+
         let answer = enemy.marbles;
         if(answer % 2 == 0) {
             answer = true;
@@ -261,12 +376,15 @@ function combat(character){
                 writeInDom("Son nombre de billes, "+ enemy.marbles+ " est bien pair. Vous gagnez !");
                 selectedChar.marbles += enemy.marbles;
                 selectedChar.marbles += selectedChar.gain;
+                encounteredEnem.push(enemy);
+                
             } else {
                 writeInDom("Vous pensez que son nombre de bille est pair. ");
                 writeInDom("Son nombre de billes, "+ enemy.marbles+ " est impair. Vous perdez.");
                 if(selectedChar.marbles > 0) {
                     selectedChar.marbles -= enemy.marbles;
                     selectedChar.marbles -= selectedChar.loss;
+                    enemy.marbles += character.marbles;
                 }
                 if(selectedChar.marbles < 0) {
                     selectedChar.marbles = 0;
@@ -279,6 +397,7 @@ function combat(character){
                 if(selectedChar.marbles > 0) {
                     selectedChar.marbles -= enemy.marbles;
                     selectedChar.marbles -= selectedChar.loss;
+                    enemy.marbles += character.marbles;
                 }
                 if(selectedChar.marbles < 0) {
                     selectedChar.marbles = 0;
@@ -288,9 +407,11 @@ function combat(character){
                 writeInDom("Son nombre de billes, "+ enemy.marbles+ " est bien impair. Vous gagnez !");
                 selectedChar.marbles += enemy.marbles;
                 selectedChar.marbles += selectedChar.gain;
+                encounteredEnem.push(enemy);
             }
         }
         writeInDom("------------------------------------------------------------------");
+        console.log(encounteredEnem);
     }
     writeInDom("Il vous reste " + selectedChar.marbles + " billes.");
     if(selectedChar.marbles >= 1) {
@@ -298,11 +419,16 @@ function combat(character){
     } else {
         writeInDom("Vous êtes mort.");
     }
-    
+    // montrer/cacher les boutons
     gamestarted = false;
     showChara1();
-        showChara2();
-        showChara3();
-        gameended = true;
+    showChara2();
+    showChara3();
+    gameended = true;
     showReplay();
+    diffChoose = false;
+    showEasy();
+    showHard();
+    showImpossible();
+    
 }
