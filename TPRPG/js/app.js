@@ -411,7 +411,6 @@ function combat(character){
             }
         }
         writeInDom("------------------------------------------------------------------");
-        console.log(encounteredEnem);
     }
     writeInDom("Il vous reste " + selectedChar.marbles + " billes.");
     if(selectedChar.marbles >= 1) {
